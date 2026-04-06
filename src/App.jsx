@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import profilePic from './assets/prof.png';
 import {
   Search, Bell, LayoutGrid, Users, ShoppingBag, Box, CreditCard,
   Activity, LogOut, User, Percent, AlertTriangle, Tag, FileText,
   Plus, Ban, ChevronDown, Eye, X
 } from 'lucide-react';
 
-// ─────────────────────────────────────────────
-// Suspend User Modal
-// ─────────────────────────────────────────────
+// ============================================================
+// PROFILE IMAGE CONFIGURATION
+// ============================================================
+// To replace the profile picture:
+// 1. Add your image file to the /public folder (e.g., /public/profile.jpg)
+// 2. Change the value of PROFILE_IMAGE below to match your filename
+//    Example: const PROFILE_IMAGE = '/my-photo.png';
+// 3. Save the file and refresh the browser — done!
+// ============================================================
+const PROFILE_IMAGE = '/prof.png';
+// ============================================================
+
+// Suspend User Modal Component
 const SuspendUserModal = ({ isOpen, onClose }) => {
   const [reason, setReason] = useState('');
 
@@ -81,9 +90,7 @@ const SuspendUserModal = ({ isOpen, onClose }) => {
   );
 };
 
-// ─────────────────────────────────────────────
-// Invite User Modal
-// ─────────────────────────────────────────────
+// Invite User Modal Component
 const InviteUserModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
 
@@ -158,9 +165,7 @@ const InviteUserModal = ({ isOpen, onClose }) => {
   );
 };
 
-// ─────────────────────────────────────────────
-// Sidebar Item
-// ─────────────────────────────────────────────
+// Sidebar Item Component
 const SidebarItem = ({ icon: Icon, label, active, onClick }) => (
   <a
     href="#"
@@ -179,124 +184,150 @@ const SidebarItem = ({ icon: Icon, label, active, onClick }) => (
   </a>
 );
 
-// ─────────────────────────────────────────────
-// Dashboard Page
-// ─────────────────────────────────────────────
+// Dashboard Page Component
 const DashboardPage = () => {
   const recentActivities = [
-    { id: 1,  activity: 'Order #45123 placed',          user: 'Blue Hoodie',        role: 'Customer', date: '4/4/25', status: 'Pending',      action: 'View order'   },
-    { id: 2,  activity: 'KYC documents submitted',      user: 'Premium fashion LTd', role: 'Vendor',   date: '4/4/25', status: 'Under Review', action: 'Review KYC'   },
-    { id: 3,  activity: 'Homepage banner updated',      user: 'Admin',              role: 'Admin',    date: '4/4/25', status: 'Live',         action: 'View Banner'  },
-    { id: 4,  activity: '₦250,000 payout triggered',   user: 'System',             role: 'Platform', date: '4/4/25', status: 'Successful',   action: 'View pay-out' },
-    { id: 5,  activity: 'Order #45124 placed',          user: 'Red Sneakers',       role: 'Customer', date: '4/3/25', status: 'Completed',    action: 'View order'   },
-    { id: 6,  activity: 'New vendor registration',      user: 'Fashion Hub Inc',    role: 'Vendor',   date: '4/3/25', status: 'Pending',      action: 'Review'       },
-    { id: 7,  activity: 'Refund processed',             user: 'Jane Smith',         role: 'Customer', date: '4/3/25', status: 'Completed',    action: 'View details' },
-    { id: 8,  activity: 'Product listing updated',      user: 'TechGear Pro',       role: 'Vendor',   date: '4/2/25', status: 'Live',         action: 'View listing' },
-    { id: 9,  activity: 'Order #45125 cancelled',       user: 'Mike Johnson',       role: 'Customer', date: '4/2/25', status: 'Cancelled',    action: 'View order'   },
-    { id: 10, activity: 'Payout request submitted',     user: 'Luxe Styles',        role: 'Vendor',   date: '4/2/25', status: 'Processing',   action: 'View request' },
-    { id: 11, activity: 'New user registered',          user: 'Tom Wilson',         role: 'Customer', date: '4/1/25', status: 'Active',       action: 'View profile' },
-    { id: 12, activity: 'Product review flagged',       user: 'Sarah Lee',          role: 'Customer', date: '4/1/25', status: 'Pending',      action: 'Review'       },
+    { id: 1, activity: 'Order #45123 placed', user: 'Blue Hoodie', role: 'Customer', date: '4/4/25', status: 'Pending', action: 'View order' },
+    { id: 2, activity: 'KYC documents submitted', user: 'Premium fashion LTd', role: 'Vendor', date: '4/4/25', status: 'Under Review', action: 'Review KYC' },
+    { id: 3, activity: 'Homepage banner updated', user: 'Admin', role: 'Admin', date: '4/4/25', status: 'Live', action: 'View Banner' },
+    { id: 4, activity: '₦250,000 payout triggered', user: 'System', role: 'Platform', date: '4/4/25', status: 'Successful', action: 'View pay-out' },
+    { id: 5, activity: 'Order #45124 placed', user: 'Red Sneakers', role: 'Customer', date: '4/3/25', status: 'Completed', action: 'View order' },
+    { id: 6, activity: 'New vendor registration', user: 'Fashion Hub Inc', role: 'Vendor', date: '4/3/25', status: 'Pending', action: 'Review' },
+    { id: 7, activity: 'Refund processed', user: 'Jane Smith', role: 'Customer', date: '4/3/25', status: 'Completed', action: 'View details' },
+    { id: 8, activity: 'Product listing updated', user: 'TechGear Pro', role: 'Vendor', date: '4/2/25', status: 'Live', action: 'View listing' },
+    { id: 9, activity: 'Order #45125 cancelled', user: 'Mike Johnson', role: 'Customer', date: '4/2/25', status: 'Cancelled', action: 'View order' },
+    { id: 10, activity: 'Payout request submitted', user: 'Luxe Styles', role: 'Vendor', date: '4/2/25', status: 'Processing', action: 'View request' },
+    { id: 11, activity: 'New user registered', user: 'Tom Wilson', role: 'Customer', date: '4/1/25', status: 'Active', action: 'View profile' },
+    { id: 12, activity: 'Product review flagged', user: 'Sarah Lee', role: 'Customer', date: '4/1/25', status: 'Pending', action: 'Review' },
   ];
-
-  const statusColors = {
-    'Pending':      'bg-amber-50  text-amber-600',
-    'Under Review': 'bg-blue-50   text-blue-600',
-    'Live':         'bg-emerald-50 text-emerald-600',
-    'Successful':   'bg-emerald-50 text-emerald-600',
-    'Completed':    'bg-emerald-50 text-emerald-600',
-    'Cancelled':    'bg-red-50    text-red-500',
-    'Processing':   'bg-purple-50 text-purple-600',
-    'Active':       'bg-emerald-50 text-emerald-600',
-  };
 
   return (
     <div className="flex-1 overflow-y-auto p-8">
-
-      {/* ── Stats Cards ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        {[
-          { label: 'Total Users',   value: '12,847', sub: '+122 this month',  Icon: User        },
-          { label: 'Total Vendors', value: '156',    sub: '+12 this month',   Icon: Users       },
-          { label: 'Total Orders',  value: '2,045',  sub: '+567 this month',  Icon: ShoppingBag },
-          { label: 'Total Revenue', value: '$284,591', sub: '+18.2% this month', Icon: Percent  },
-        ].map(({ label, value, sub, Icon }) => (
-          <div key={label} className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-gray-50">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
-                <Icon className="w-4 h-4 text-gray-600" strokeWidth={2} />
-              </div>
-              <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">{label}</h3>
+      {/* Stats Cards Row */}
+      <div className="grid grid-cols-4 gap-6 mb-10">
+        <div className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+          <div className="flex items-center space-x-4 mb-4">
+            <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
+              <User className="w-4 h-4 text-gray-600" strokeWidth={2} />
             </div>
-            <p className="text-3xl font-bold text-gray-900 mb-1">{value}</p>
-            <p className="text-[13px] font-medium text-emerald-500">{sub}</p>
+            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">Total Users</h3>
           </div>
-        ))}
+          <div>
+            <p className="text-3xl font-bold text-gray-900 mb-2">12,847</p>
+            <p className="text-[13px] font-medium text-emerald-400">+122 this month</p>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+          <div className="flex items-center space-x-4 mb-4">
+            <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
+              <User className="w-4 h-4 text-gray-600" strokeWidth={2} />
+            </div>
+            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">Total Vendors</h3>
+          </div>
+          <div>
+            <p className="text-3xl font-bold text-gray-900 mb-2">156</p>
+            <p className="text-[13px] font-medium text-emerald-400">+12 this month</p>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+          <div className="flex items-center space-x-4 mb-4">
+            <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
+              <ShoppingBag className="w-4 h-4 text-gray-600" strokeWidth={2} />
+            </div>
+            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">Total Orders</h3>
+          </div>
+          <div>
+            <p className="text-3xl font-bold text-gray-900 mb-2">2,045</p>
+            <p className="text-[13px] font-medium text-emerald-400">+567 this month</p>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+          <div className="flex items-center space-x-4 mb-4">
+            <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
+              <Percent className="w-4 h-4 text-gray-600" strokeWidth={2} />
+            </div>
+            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">Total Revenue</h3>
+          </div>
+          <div>
+            <p className="text-3xl font-bold text-gray-900 mb-2">$284,591</p>
+            <p className="text-[13px] font-medium text-emerald-400">+18.2% this month</p>
+          </div>
+        </div>
       </div>
 
-      {/* ── Pending Actions ── */}
+      {/* Pending Actions */}
       <div className="mb-10">
         <h2 className="text-base font-bold text-gray-900 mb-4">Pending Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { title: 'Vendor Approvals Pending', count: 5,  desc: '5 new vendors awaiting approval', btn: 'Review Application' },
-            { title: 'Update Promotion Banner',  count: 12, desc: 'Expires in 2 days',               btn: 'Go to Promotions'   },
-          ].map(({ title, count, desc, btn }) => (
-            <div key={title} className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center mb-1">
-                  <AlertTriangle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" strokeWidth={1.5} />
-                  <h3 className="text-[15px] font-medium text-gray-800">{title}</h3>
-                  <span className="ml-3 min-w-[20px] h-5 rounded-full bg-[#f44336] text-white flex items-center justify-center text-[11px] font-bold px-1">
-                    {count}
-                  </span>
+        <div className="grid grid-cols-2 gap-6">
+          <div className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center mb-1">
+                <AlertTriangle className="w-5 h-5 text-red-500 mr-3" strokeWidth={1.5} />
+                <h3 className="text-[15px] font-medium text-gray-800">Vendor Approvals Pending</h3>
+                <div className="ml-3 w-5 h-5 rounded-full bg-[#f44336] text-white flex items-center justify-center text-[11px] font-bold">
+                  5
                 </div>
-                <p className="text-[13px] text-gray-400 ml-8 mb-6">{desc}</p>
               </div>
-              <button className="w-full py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-sm hover:bg-gray-50 transition-colors">
-                {btn}
-              </button>
+              <p className="text-[13px] text-gray-400 ml-8 mb-6">5 new vendors awaiting approval</p>
             </div>
-          ))}
+            <button className="w-full py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-sm hover:bg-gray-50 transition-colors">
+              Review Application
+            </button>
+          </div>
+
+          <div className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center mb-1">
+                <AlertTriangle className="w-5 h-5 text-red-500 mr-3" strokeWidth={1.5} />
+                <h3 className="text-[15px] font-medium text-gray-800">Update promotion Banner</h3>
+                <div className="ml-3 w-5 h-5 rounded-full bg-[#f44336] text-white flex items-center justify-center text-[11px] font-bold">
+                  12
+                </div>
+              </div>
+              <p className="text-[13px] text-gray-400 ml-8 mb-6">Expires in 2 days</p>
+            </div>
+            <button className="w-full py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-sm hover:bg-gray-50 transition-colors">
+              Go to Promotions
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* ── Recent Activities ── */}
-      <div className="bg-white rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-gray-50 p-8">
-        <div className="mb-6">
+      {/* Recent Activities */}
+      <div className="bg-white rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)] p-8">
+        <div className="mb-8">
           <h2 className="text-base font-bold text-gray-900 mb-1">Recent Activities</h2>
-          <p className="text-[14px] text-gray-400">
-            View your most recent activities of both users and Vendors of the platform
-          </p>
+          <p className="text-[14px] text-gray-400">View your most recent activities of both users and Vendors of the platform</p>
         </div>
 
-        <div className="overflow-x-auto max-h-[420px] overflow-y-auto">
+        <div className="overflow-x-auto max-h-[400px] overflow-y-auto">
           <table className="w-full text-left border-collapse">
             <thead className="sticky top-0 bg-white z-10">
-              <tr className="border-b border-gray-100">
-                {['Activity', 'User', 'Role', 'Date', 'Status', 'Action'].map((h) => (
-                  <th key={h} className="pb-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wider pr-4">
-                    {h}
-                  </th>
-                ))}
+              <tr>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[25%]">Activity</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[20%]">User</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">Role</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">Date</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">Status</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[10%]">Action</th>
               </tr>
             </thead>
             <tbody className="text-[14px]">
               {recentActivities.map((item) => (
-                <tr key={item.id} className="border-t border-gray-100 hover:bg-gray-50/40 transition-colors">
-                  <td className="py-4 pr-4 text-gray-800 flex items-center">
-                    <input type="checkbox" className="w-4 h-4 mr-3 rounded border-gray-300 text-gray-900 flex-shrink-0" />
+                <tr key={item.id} className="border-t border-gray-100">
+                  <td className="py-5 flex items-center text-gray-800">
+                    <input type="checkbox" className="w-4 h-4 mr-4 rounded-[3px] border-gray-300 text-gray-900 focus:ring-gray-900" />
                     {item.activity}
                   </td>
-                  <td className="py-4 pr-4 text-gray-700">{item.user}</td>
-                  <td className="py-4 pr-4 text-gray-700">{item.role}</td>
-                  <td className="py-4 pr-4 text-gray-700 whitespace-nowrap">{item.date}</td>
-                  <td className="py-4 pr-4">
-                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-[12px] font-medium ${statusColors[item.status] || 'bg-gray-100 text-gray-600'}`}>
-                      {item.status}
-                    </span>
-                  </td>
-                  <td className="py-4">
-                    <button className="text-[#eab308] font-medium hover:text-yellow-600 transition-colors whitespace-nowrap text-[13px]">
+                  <td className="py-5 text-gray-800">{item.user}</td>
+                  <td className="py-5 text-gray-800">{item.role}</td>
+                  <td className="py-5 text-gray-800">{item.date}</td>
+                  <td className="py-5 text-gray-800">{item.status}</td>
+                  <td className="py-5">
+                    <button className="text-[#eab308] font-medium hover:text-yellow-600 transition-colors">
                       {item.action}
                     </button>
                   </td>
@@ -307,74 +338,59 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      <div className="h-8" />
+      <div className="h-8"></div>
     </div>
   );
 };
 
-// ─────────────────────────────────────────────
-// Users & Vendors Page
-// ─────────────────────────────────────────────
+// Users & Vendors Page Component
 const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal }) => {
   const [activeTab, setActiveTab] = useState('users');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All');
 
   const usersData = [
-    { id: 1, month: 'Jan 2024', email: 'john@example.com',   joined: '2024-01-15', status: 'Active',    activity: '2 hours ago',  orders: 12, spent: '$854.08'    },
-    { id: 2, month: 'Jan 2024', email: 'sarah@example.com',  joined: '2024-01-15', status: 'Suspended', activity: '1 week ago',   orders: 1,  spent: '$854.08'    },
-    { id: 3, month: 'Feb 2024', email: 'mike@example.com',   joined: '2024-02-10', status: 'Suspended', activity: '1 week ago',   orders: 0,  spent: '$490.51'    },
-    { id: 4, month: 'Feb 2024', email: 'emma@example.com',   joined: '2024-02-20', status: 'Suspended', activity: '1 week ago',   orders: 0,  spent: '$782.01'    },
-    { id: 5, month: 'Mar 2024', email: 'alex@example.com',   joined: '2024-03-05', status: 'Active',    activity: '5 hours ago',  orders: 8,  spent: '$1,245.00'  },
-    { id: 6, month: 'Mar 2024', email: 'lisa@example.com',   joined: '2024-03-12', status: 'Active',    activity: '1 day ago',    orders: 3,  spent: '$320.50'    },
-    { id: 7, month: 'Mar 2024', email: 'david@example.com',  joined: '2024-03-18', status: 'Active',    activity: '3 hours ago',  orders: 15, spent: '$2,100.00'  },
-    { id: 8, month: 'Apr 2024', email: 'nina@example.com',   joined: '2024-04-01', status: 'Suspended', activity: '2 weeks ago',  orders: 0,  spent: '$0.00'      },
+    { id: 1, month: 'Jan 2024', email: 'john@example.com', joined: '2024-01-15', status: 'Active', activity: '2 hours ago', orders: 12, spent: '$854.08' },
+    { id: 2, month: 'Jan 2024', email: 'sarah@example.com', joined: '2024-01-15', status: 'Suspended', activity: '1 weeks ago', orders: 1, spent: '$854.08' },
+    { id: 3, month: 'Feb 2024', email: 'mike@example.com', joined: '2024-02-10', status: 'Suspended', activity: '1 weeks ago', orders: 0, spent: '$490.51' },
+    { id: 4, month: 'Feb 2024', email: 'emma@example.com', joined: '2024-02-20', status: 'Suspended', activity: '1 weeks ago', orders: 0, spent: '$782.01' },
+    { id: 5, month: 'Mar 2024', email: 'alex@example.com', joined: '2024-03-05', status: 'Active', activity: '5 hours ago', orders: 8, spent: '$1,245.00' },
+    { id: 6, month: 'Mar 2024', email: 'lisa@example.com', joined: '2024-03-12', status: 'Active', activity: '1 day ago', orders: 3, spent: '$320.50' },
+    { id: 7, month: 'Mar 2024', email: 'david@example.com', joined: '2024-03-18', status: 'Active', activity: '3 hours ago', orders: 15, spent: '$2,100.00' },
+    { id: 8, month: 'Apr 2024', email: 'nina@example.com', joined: '2024-04-01', status: 'Suspended', activity: '2 weeks ago', orders: 0, spent: '$0.00' },
   ];
 
   const vendorsData = [
-    { id: 1, month: 'Jan 2024', email: 'premiumfashion@example.com', joined: '2024-01-10', status: 'Active',    activity: '1 hour ago',  orders: 156, spent: '$12,854.08' },
-    { id: 2, month: 'Jan 2024', email: 'techgear@example.com',       joined: '2024-01-20', status: 'Active',    activity: '3 hours ago', orders: 89,  spent: '$8,234.50'  },
-    { id: 3, month: 'Feb 2024', email: 'luxestyles@example.com',     joined: '2024-02-05', status: 'Suspended', activity: '1 week ago',  orders: 23,  spent: '$2,490.51'  },
-    { id: 4, month: 'Feb 2024', email: 'fashionhub@example.com',     joined: '2024-02-15', status: 'Active',    activity: '30 mins ago', orders: 201, spent: '$18,782.01' },
-    { id: 5, month: 'Mar 2024', email: 'streetwear@example.com',     joined: '2024-03-01', status: 'Active',    activity: '2 hours ago', orders: 67,  spent: '$5,245.00'  },
-    { id: 6, month: 'Mar 2024', email: 'homegoodspro@example.com',   joined: '2024-03-10', status: 'Suspended', activity: '3 days ago',  orders: 12,  spent: '$920.50'    },
+    { id: 1, month: 'Jan 2024', email: 'premiumfashion@example.com', joined: '2024-01-10', status: 'Active', activity: '1 hour ago', orders: 156, spent: '$12,854.08' },
+    { id: 2, month: 'Jan 2024', email: 'techgear@example.com', joined: '2024-01-20', status: 'Active', activity: '3 hours ago', orders: 89, spent: '$8,234.50' },
+    { id: 3, month: 'Feb 2024', email: 'luxestyles@example.com', joined: '2024-02-05', status: 'Suspended', activity: '1 week ago', orders: 23, spent: '$2,490.51' },
+    { id: 4, month: 'Feb 2024', email: 'fashionhub@example.com', joined: '2024-02-15', status: 'Active', activity: '30 mins ago', orders: 201, spent: '$18,782.01' },
+    { id: 5, month: 'Mar 2024', email: 'streetwear@example.com', joined: '2024-03-01', status: 'Active', activity: '2 hours ago', orders: 67, spent: '$5,245.00' },
+    { id: 6, month: 'Mar 2024', email: 'homegoodspro@example.com', joined: '2024-03-10', status: 'Suspended', activity: '3 days ago', orders: 12, spent: '$920.50' },
   ];
 
-  const rawData = activeTab === 'users' ? usersData : vendorsData;
-
-  const tableData = rawData.filter((row) => {
-    const matchesSearch =
-      searchQuery === '' ||
-      row.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      row.activity.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus =
-      statusFilter === 'All' || row.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  const tableData = activeTab === 'users' ? usersData : vendorsData;
 
   return (
     <div className="flex-1 overflow-y-auto p-8">
-
-      {/* ── Page Header ── */}
       <div className="mb-8">
         <h1 className="text-[22px] font-bold text-gray-900">User & Vendors Management</h1>
         <p className="text-sm text-gray-500 mt-1">Manage all platform users, Vendors and their activities</p>
 
-        <div className="flex flex-wrap items-center justify-between mt-6 gap-4">
-          {/* Tabs */}
+        <div className="flex items-center justify-between mt-6">
           <div className="flex bg-white rounded-md overflow-hidden shadow-sm border border-gray-200 text-sm">
-            {['users', 'vendors'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-8 py-2.5 font-medium capitalize transition-colors ${activeTab === tab ? 'bg-[#1c2e24] text-white' : 'text-gray-600 hover:bg-gray-50'}`}
-              >
-                {tab}
-              </button>
-            ))}
+            <button
+              onClick={() => setActiveTab('users')}
+              className={`px-8 py-2.5 font-medium transition-colors ${activeTab === 'users' ? 'bg-[#1c2e24] text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+            >
+              Users
+            </button>
+            <button
+              onClick={() => setActiveTab('vendors')}
+              className={`px-8 py-2.5 font-medium transition-colors ${activeTab === 'vendors' ? 'bg-[#1c2e24] text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+            >
+              Vendors
+            </button>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex items-center space-x-3">
             <button
               onClick={onOpenInviteModal}
@@ -394,7 +410,6 @@ const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal }) => {
         </div>
       </div>
 
-      {/* ── Table Card ── */}
       <div className="bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-gray-100 p-6">
         <h2 className="text-lg font-semibold text-gray-900">
           Search {activeTab === 'users' ? 'Users' : 'Vendors'}
@@ -403,157 +418,111 @@ const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal }) => {
           Quickly find any {activeTab === 'users' ? 'user' : 'vendor'} by name, email, or ID to view details, manage status, or perform admin actions.
         </p>
 
-        {/* Filters */}
-        <div className="flex flex-wrap gap-3 mb-6">
-          <div className="flex-1 min-w-[200px] relative">
+        <div className="flex space-x-4 mb-6">
+          <div className="flex-1 relative">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={`Search ${activeTab} by name, email, activity`}
               className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#1c2e24] focus:border-[#1c2e24] placeholder-gray-400"
             />
           </div>
-          <div className="relative w-44">
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full appearance-none pl-4 pr-10 py-2 border border-gray-200 rounded-md text-sm text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-[#1c2e24] focus:border-[#1c2e24]"
-            >
-              <option>All</option>
+          <div className="relative w-48">
+            <select className="w-full appearance-none pl-4 pr-10 py-2 border border-gray-200 rounded-md text-sm text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-[#1c2e24] focus:border-[#1c2e24]">
               <option>Active</option>
               <option>Suspended</option>
+              <option>All</option>
             </select>
             <ChevronDown className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
         </div>
 
-        {/* Table */}
         <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
           <table className="w-full text-left border-collapse">
             <thead className="sticky top-0 bg-white z-10">
               <tr className="border-b border-gray-200">
-                {[activeTab === 'users' ? 'User' : 'Vendor', 'Status', 'Activity', 'Orders', activeTab === 'users' ? 'Total Spent' : 'Total Sales', 'Action'].map((h) => (
-                  <th key={h} className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                    {h}
-                  </th>
-                ))}
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {activeTab === 'users' ? 'User' : 'Vendor'}
+                </th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Activity</th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Orders</th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {activeTab === 'users' ? 'Total Spent' : 'Total Sales'}
+                </th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {tableData.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="py-12 text-center text-gray-400 text-sm">
-                    No {activeTab} found matching your search.
+              {tableData.map((row) => (
+                <tr key={row.id} className="hover:bg-gray-50/50 transition-colors">
+                  <td className="py-4 px-4">
+                    <div className="flex flex-col">
+                      <span className="text-[13px] text-gray-500 mb-1.5">{row.month}</span>
+                      <div className="flex items-center">
+                        <input type="checkbox" className="w-3.5 h-3.5 mr-2.5 rounded border-gray-300 text-[#1c2e24] focus:ring-[#1c2e24]" />
+                        <span className="text-[14px] text-gray-700">{row.email}</span>
+                      </div>
+                      <span className="text-[13px] text-gray-400 mt-1">Joined {row.joined}</span>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 align-middle">
+                    <span className={`text-[14px] font-medium ${row.status === 'Active' ? 'text-emerald-500' : 'text-[#f04438]'}`}>
+                      {row.status}
+                    </span>
+                  </td>
+                  <td className="py-4 px-4 align-middle text-[14px] font-medium text-gray-700">
+                    {row.activity}
+                  </td>
+                  <td className="py-4 px-4 align-middle text-[14px] font-medium text-gray-700">
+                    {row.orders}
+                  </td>
+                  <td className="py-4 px-4 align-middle text-[14px] font-medium text-gray-700">
+                    {row.spent}
+                  </td>
+                  <td className="py-4 px-4 align-middle">
+                    <div className="flex items-center space-x-2">
+                      <button className="p-1.5 border border-gray-200 rounded text-gray-600 hover:bg-gray-50 transition-colors">
+                        <Eye className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={onOpenSuspendModal}
+                        className="p-1.5 border border-[#f04438]/20 rounded text-[#f04438] hover:bg-[#f04438]/10 transition-colors"
+                      >
+                        <Ban className="w-4 h-4" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
-              ) : (
-                tableData.map((row) => (
-                  <tr key={row.id} className="hover:bg-gray-50/50 transition-colors">
-                    <td className="py-4 px-4">
-                      <div className="flex flex-col">
-                        <span className="text-[13px] text-gray-400 mb-1">{row.month}</span>
-                        <div className="flex items-center">
-                          <input type="checkbox" className="w-3.5 h-3.5 mr-2.5 rounded border-gray-300 text-[#1c2e24]" />
-                          <span className="text-[14px] text-gray-700">{row.email}</span>
-                        </div>
-                        <span className="text-[13px] text-gray-400 mt-1">Joined {row.joined}</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 align-middle">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${row.status === 'Active' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-500'}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${row.status === 'Active' ? 'bg-emerald-500' : 'bg-red-500'}`} />
-                        {row.status}
-                      </span>
-                    </td>
-                    <td className="py-4 px-4 align-middle text-[14px] text-gray-700">{row.activity}</td>
-                    <td className="py-4 px-4 align-middle text-[14px] font-medium text-gray-700">{row.orders}</td>
-                    <td className="py-4 px-4 align-middle text-[14px] font-medium text-gray-700">{row.spent}</td>
-                    <td className="py-4 px-4 align-middle">
-                      <div className="flex items-center space-x-2">
-                        <button
-                          title="View"
-                          className="p-1.5 border border-gray-200 rounded text-gray-600 hover:bg-gray-50 transition-colors"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button
-                          title="Suspend"
-                          onClick={onOpenSuspendModal}
-                          className="p-1.5 border border-[#f04438]/20 rounded text-[#f04438] hover:bg-[#f04438]/10 transition-colors"
-                        >
-                          <Ban className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              )}
+              ))}
             </tbody>
           </table>
         </div>
-
-        {/* Row count */}
-        <div className="mt-4 text-[13px] text-gray-400">
-          Showing <span className="font-medium text-gray-600">{tableData.length}</span> of <span className="font-medium text-gray-600">{rawData.length}</span> {activeTab}
-        </div>
       </div>
     </div>
   );
 };
 
-// ─────────────────────────────────────────────
-// Placeholder Page
-// ─────────────────────────────────────────────
-const PlaceholderPage = ({ page }) => {
-  const icons = {
-    orders:     <ShoppingBag className="w-8 h-8 text-gray-400" />,
-    promotions: <Tag         className="w-8 h-8 text-gray-400" />,
-    payout:     <CreditCard  className="w-8 h-8 text-gray-400" />,
-    reports:    <FileText    className="w-8 h-8 text-gray-400" />,
-  };
-
-  return (
-    <div className="flex-1 flex items-center justify-center bg-[#f8f9fa]">
-      <div className="text-center">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-          {icons[page]}
-        </div>
-        <h2 className="text-xl font-semibold text-gray-700 mb-2 capitalize">
-          {page === 'reports' ? 'Reports & Logs' : page} Page
-        </h2>
-        <p className="text-gray-400 text-sm">This page is currently under construction.</p>
-      </div>
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────
-// Main App
-// ─────────────────────────────────────────────
+// Main App Component
 export default function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
-  const [isInviteModalOpen, setIsInviteModalOpen]   = useState(false);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
-
-  const navItems = [
-    { icon: LayoutGrid,  label: 'Dashboard',     page: 'dashboard'  },
-    { icon: Users,       label: 'Users & Vendors', page: 'users'    },
-    { icon: ShoppingBag, label: 'Orders',         page: 'orders'    },
-    { icon: Tag,         label: 'Promotions',     page: 'promotions' },
-    { icon: CreditCard,  label: 'Payout',         page: 'payout'    },
-    { icon: FileText,    label: 'Reports & Logs', page: 'reports'   },
-  ];
 
   return (
     <div className="flex h-screen bg-[#f8f9fa] font-sans text-gray-800 antialiased">
 
       {/* Modals */}
-      <InviteUserModal  isOpen={isInviteModalOpen}  onClose={() => setIsInviteModalOpen(false)}  />
-      <SuspendUserModal isOpen={isSuspendModalOpen} onClose={() => setIsSuspendModalOpen(false)} />
+      <InviteUserModal
+        isOpen={isInviteModalOpen}
+        onClose={() => setIsInviteModalOpen(false)}
+      />
+      <SuspendUserModal
+        isOpen={isSuspendModalOpen}
+        onClose={() => setIsSuspendModalOpen(false)}
+      />
 
-      {/* ── Sidebar ── */}
+      {/* Sidebar */}
       <aside className="w-64 bg-white flex flex-col justify-between flex-shrink-0 border-r border-gray-100 shadow-[2px_0_8px_rgba(0,0,0,0.02)] z-10 relative">
         <div className="pt-8">
           {/* Logo */}
@@ -561,16 +530,43 @@ export default function App() {
             <span className="text-3xl font-serif italic font-medium text-gray-800 tracking-tight">Iyóge</span>
           </div>
 
-          <nav className="space-y-0.5">
-            {navItems.map(({ icon, label, page }) => (
-              <SidebarItem
-                key={page}
-                icon={icon}
-                label={label}
-                active={currentPage === page}
-                onClick={() => setCurrentPage(page)}
-              />
-            ))}
+          <nav className="space-y-1">
+            <SidebarItem
+              icon={LayoutGrid}
+              label="Dashboard"
+              active={currentPage === 'dashboard'}
+              onClick={() => setCurrentPage('dashboard')}
+            />
+            <SidebarItem
+              icon={Users}
+              label="Users & Vendors"
+              active={currentPage === 'users'}
+              onClick={() => setCurrentPage('users')}
+            />
+            <SidebarItem
+              icon={ShoppingBag}
+              label="Orders"
+              active={currentPage === 'orders'}
+              onClick={() => setCurrentPage('orders')}
+            />
+            <SidebarItem
+              icon={Tag}
+              label="Promotions"
+              active={currentPage === 'promotions'}
+              onClick={() => setCurrentPage('promotions')}
+            />
+            <SidebarItem
+              icon={CreditCard}
+              label="Payout"
+              active={currentPage === 'payout'}
+              onClick={() => setCurrentPage('payout')}
+            />
+            <SidebarItem
+              icon={FileText}
+              label="Reports & Logs"
+              active={currentPage === 'reports'}
+              onClick={() => setCurrentPage('reports')}
+            />
           </nav>
         </div>
 
@@ -582,11 +578,12 @@ export default function App() {
         </div>
       </aside>
 
-      {/* ── Main Content ── */}
+      {/* Main Content Area */}
       <main className="flex-1 flex flex-col overflow-hidden">
 
         {/* Top Header */}
-        <header className="h-16 bg-white flex items-center justify-between px-8 relative border-b border-gray-100 flex-shrink-0">
+        <header className="h-16 bg-white flex items-center justify-between px-8 z-0 relative border-b border-gray-100">
+          {/* Search Bar */}
           <div className="flex-1 flex items-center mr-6">
             <div className="relative w-full max-w-[500px]">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" strokeWidth={2} />
@@ -598,33 +595,60 @@ export default function App() {
             </div>
           </div>
 
+          {/* Header Right Actions */}
           <div className="flex items-center space-x-3 flex-shrink-0">
-            <button className="w-10 h-10 flex items-center justify-center border border-gray-100 rounded-sm text-gray-400 hover:bg-gray-50 hover:text-gray-600 transition-colors relative">
+            <button className="w-10 h-10 flex items-center justify-center border border-gray-100 rounded-sm text-gray-400 hover:bg-gray-50 hover:text-gray-600 transition-colors">
               <Bell className="w-5 h-5" strokeWidth={1.5} />
-              {/* Notification dot */}
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
             </button>
-            {/* Updated profile picture */}
-<div className="w-10 h-10 rounded-sm overflow-hidden bg-[#e63946] flex-shrink-0 cursor-pointer">
-  <img
-    src={prof}
-    alt="Profile"
-    className="w-full h-full object-cover"
-  />
-</div>
+
+            {/* =====================================================
+                PROFILE PICTURE
+                =====================================================
+                To use YOUR own photo:
+                1. Copy your image into the /public folder
+                2. Change PROFILE_IMAGE at the top of this file
+                   to match your filename, e.g. '/my-photo.png'
+                ===================================================== */}
+            <div className="w-10 h-10 rounded-sm overflow-hidden flex-shrink-0 cursor-pointer bg-gray-200">
+              <img
+                src={PROFILE_IMAGE}
+                alt="Profile"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  // Fallback: shows initials-style placeholder if image fails to load
+                  e.target.style.display = 'none';
+                  e.target.parentElement.innerHTML =
+                    '<div class="w-full h-full bg-[#1c2e24] flex items-center justify-center text-white text-sm font-bold">AD</div>';
+                }}
+              />
+            </div>
           </div>
-          
         </header>
 
         {/* Page Content */}
         {currentPage === 'dashboard' && <DashboardPage />}
-        {currentPage === 'users'     && (
+        {currentPage === 'users' && (
           <UsersVendorsPage
             onOpenInviteModal={() => setIsInviteModalOpen(true)}
             onOpenSuspendModal={() => setIsSuspendModalOpen(true)}
           />
         )}
-        {!['dashboard', 'users'].includes(currentPage) && <PlaceholderPage page={currentPage} />}
+        {currentPage !== 'dashboard' && currentPage !== 'users' && (
+          <div className="flex-1 flex items-center justify-center bg-[#f8f9fa]">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                {currentPage === 'orders' && <ShoppingBag className="w-8 h-8 text-gray-400" />}
+                {currentPage === 'promotions' && <Tag className="w-8 h-8 text-gray-400" />}
+                {currentPage === 'payout' && <CreditCard className="w-8 h-8 text-gray-400" />}
+                {currentPage === 'reports' && <FileText className="w-8 h-8 text-gray-400" />}
+              </div>
+              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+                {currentPage.charAt(0).toUpperCase() + currentPage.slice(1)} Page
+              </h2>
+              <p className="text-gray-500">This page is under construction</p>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
