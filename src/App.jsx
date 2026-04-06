@@ -33,8 +33,57 @@ import {
 const PROFILE_IMAGE = '/prof.png'
 
 // ─────────────────────────────────────────────
-// VENDOR DATA (shared so both the list page
-// and the detail page stay in sync)
+// EMPTY STATE ICON SVG
+// ─────────────────────────────────────────────
+const EmptyBoxIcon = () => (
+  <svg
+    width="84"
+    height="84"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M24 4L6 14.5V33.5L24 44L42 33.5V14.5L24 4Z"
+      fill="#1A2622"
+    />
+    <path
+      d="M6 14.5L24 25M42 14.5L24 25M24 25V44"
+      stroke="white"
+      strokeWidth="2.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 9.5L30 19.5M16 7L34 17"
+      stroke="white"
+      strokeWidth="2.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M13 25.5V38.5M18 28.5V41.5"
+      stroke="white"
+      strokeWidth="2.5"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
+
+// ─────────────────────────────────────────────
+// SHARED PRODUCTS DATA
+// ─────────────────────────────────────────────
+const PRODUCTS_DATA = [
+  { id: 1, date: 'Jan 2024', name: 'Classic Floral Midi Dress', sku: 'CFD-001', price: '$948.55',   stock: 429, sold: 798  },
+  { id: 2, date: 'Jan 2024', name: 'Oversized Denim Jacket',    sku: 'ODJ-002', price: '$748.00',   stock: 877, sold: 654  },
+  { id: 3, date: 'Feb 2024', name: 'Pleated Chiffon Blouse',    sku: 'PCB-003', price: '$320.99',   stock: 877, sold: 1023 },
+  { id: 4, date: 'Feb 2024', name: 'Wide-Leg Linen Trousers',   sku: 'WLT-004', price: '$410.00',   stock: 536, sold: 412  },
+  { id: 5, date: 'Mar 2024', name: 'Satin Wrap Evening Gown',   sku: 'SWG-005', price: '$1,200.00', stock: 210, sold: 312  },
+  { id: 6, date: 'Mar 2024', name: 'Knit Ribbed Turtleneck',    sku: 'KRT-006', price: '$215.50',   stock: 654, sold: 820  },
+]
+
+// ─────────────────────────────────────────────
+// VENDORS DATA
+// hasProducts: true  → shows product table
+// hasProducts: false → shows empty state
 // ─────────────────────────────────────────────
 const VENDORS_DATA = [
   {
@@ -52,6 +101,7 @@ const VENDORS_DATA = [
     address: '123 Business Ave, Tech City, TC 12345',
     products: '24',
     sales: '$15,249.99',
+    hasProducts: true,
   },
   {
     id: 2,
@@ -68,6 +118,7 @@ const VENDORS_DATA = [
     address: '456 Tech Blvd, Silicon City, SC 67890',
     products: '18',
     sales: '$8,234.50',
+    hasProducts: true,
   },
   {
     id: 3,
@@ -76,14 +127,15 @@ const VENDORS_DATA = [
     joined: '2024-02-05',
     status: 'Suspended',
     activity: '1 week ago',
-    orders: 23,
-    spent: '$2,490.51',
+    orders: 0,
+    spent: '$0.00',
     name: 'Luxe Styles',
     description: 'Premium luxury fashion and accessories',
     phone: '+1 234-567-8902',
     address: '789 Luxe Lane, Fashion City, FC 11223',
-    products: '10',
-    sales: '$2,490.51',
+    products: '0',
+    sales: '$0.00',
+    hasProducts: false,
   },
   {
     id: 4,
@@ -100,6 +152,7 @@ const VENDORS_DATA = [
     address: '321 Hub Street, Style Town, ST 44556',
     products: '42',
     sales: '$18,782.01',
+    hasProducts: true,
   },
   {
     id: 5,
@@ -108,14 +161,15 @@ const VENDORS_DATA = [
     joined: '2024-03-01',
     status: 'Active',
     activity: '2 hours ago',
-    orders: 67,
-    spent: '$5,245.00',
+    orders: 0,
+    spent: '$0.00',
     name: 'StreetWear Co',
     description: 'Urban streetwear and lifestyle brand',
     phone: '+1 234-567-8904',
     address: '654 Street Ave, Urban City, UC 77889',
-    products: '15',
-    sales: '$5,245.00',
+    products: '0',
+    sales: '$0.00',
+    hasProducts: false,
   },
   {
     id: 6,
@@ -132,99 +186,22 @@ const VENDORS_DATA = [
     address: '987 Home Rd, Comfort City, CC 99001',
     products: '8',
     sales: '$920.50',
+    hasProducts: true,
   },
 ]
 
+// ─────────────────────────────────────────────
+// USERS DATA
+// ─────────────────────────────────────────────
 const USERS_DATA = [
-  {
-    id: 1,
-    month: 'Jan 2024',
-    email: 'john@example.com',
-    joined: '2024-01-15',
-    status: 'Active',
-    activity: '2 hours ago',
-    orders: 12,
-    spent: '$854.08',
-  },
-  {
-    id: 2,
-    month: 'Jan 2024',
-    email: 'sarah@example.com',
-    joined: '2024-01-15',
-    status: 'Suspended',
-    activity: '1 week ago',
-    orders: 1,
-    spent: '$854.08',
-  },
-  {
-    id: 3,
-    month: 'Feb 2024',
-    email: 'mike@example.com',
-    joined: '2024-02-10',
-    status: 'Suspended',
-    activity: '1 week ago',
-    orders: 0,
-    spent: '$490.51',
-  },
-  {
-    id: 4,
-    month: 'Feb 2024',
-    email: 'emma@example.com',
-    joined: '2024-02-20',
-    status: 'Suspended',
-    activity: '1 week ago',
-    orders: 0,
-    spent: '$782.01',
-  },
-  {
-    id: 5,
-    month: 'Mar 2024',
-    email: 'alex@example.com',
-    joined: '2024-03-05',
-    status: 'Active',
-    activity: '5 hours ago',
-    orders: 8,
-    spent: '$1,245.00',
-  },
-  {
-    id: 6,
-    month: 'Mar 2024',
-    email: 'lisa@example.com',
-    joined: '2024-03-12',
-    status: 'Active',
-    activity: '1 day ago',
-    orders: 3,
-    spent: '$320.50',
-  },
-  {
-    id: 7,
-    month: 'Mar 2024',
-    email: 'david@example.com',
-    joined: '2024-03-18',
-    status: 'Active',
-    activity: '3 hours ago',
-    orders: 15,
-    spent: '$2,100.00',
-  },
-  {
-    id: 8,
-    month: 'Apr 2024',
-    email: 'nina@example.com',
-    joined: '2024-04-01',
-    status: 'Suspended',
-    activity: '2 weeks ago',
-    orders: 0,
-    spent: '$0.00',
-  },
-]
-
-const PRODUCTS_DATA = [
-  { id: 1, date: 'Jan 2024', name: 'Classic Floral Midi Dress', sku: 'CFD-001', price: '$948.55',   stock: 429, sold: 798  },
-  { id: 2, date: 'Jan 2024', name: 'Oversized Denim Jacket',    sku: 'ODJ-002', price: '$748.00',   stock: 877, sold: 654  },
-  { id: 3, date: 'Feb 2024', name: 'Pleated Chiffon Blouse',    sku: 'PCB-003', price: '$320.99',   stock: 877, sold: 1023 },
-  { id: 4, date: 'Feb 2024', name: 'Wide-Leg Linen Trousers',   sku: 'WLT-004', price: '$410.00',   stock: 536, sold: 412  },
-  { id: 5, date: 'Mar 2024', name: 'Satin Wrap Evening Gown',   sku: 'SWG-005', price: '$1,200.00', stock: 210, sold: 312  },
-  { id: 6, date: 'Mar 2024', name: 'Knit Ribbed Turtleneck',    sku: 'KRT-006', price: '$215.50',   stock: 654, sold: 820  },
+  { id: 1, month: 'Jan 2024', email: 'john@example.com',  joined: '2024-01-15', status: 'Active',    activity: '2 hours ago',  orders: 12, spent: '$854.08'   },
+  { id: 2, month: 'Jan 2024', email: 'sarah@example.com', joined: '2024-01-15', status: 'Suspended', activity: '1 week ago',   orders: 1,  spent: '$854.08'   },
+  { id: 3, month: 'Feb 2024', email: 'mike@example.com',  joined: '2024-02-10', status: 'Suspended', activity: '1 week ago',   orders: 0,  spent: '$490.51'   },
+  { id: 4, month: 'Feb 2024', email: 'emma@example.com',  joined: '2024-02-20', status: 'Suspended', activity: '1 week ago',   orders: 0,  spent: '$782.01'   },
+  { id: 5, month: 'Mar 2024', email: 'alex@example.com',  joined: '2024-03-05', status: 'Active',    activity: '5 hours ago',  orders: 8,  spent: '$1,245.00' },
+  { id: 6, month: 'Mar 2024', email: 'lisa@example.com',  joined: '2024-03-12', status: 'Active',    activity: '1 day ago',    orders: 3,  spent: '$320.50'   },
+  { id: 7, month: 'Mar 2024', email: 'david@example.com', joined: '2024-03-18', status: 'Active',    activity: '3 hours ago',  orders: 15, spent: '$2,100.00' },
+  { id: 8, month: 'Apr 2024', email: 'nina@example.com',  joined: '2024-04-01', status: 'Suspended', activity: '2 weeks ago',  orders: 0,  spent: '$0.00'     },
 ]
 
 // ─────────────────────────────────────────────
@@ -427,16 +404,14 @@ const DashboardPage = () => {
   return (
     <div className="flex-1 overflow-y-auto p-8">
 
-      {/* ── Stats Cards ── */}
+      {/* Stats Cards */}
       <div className="grid grid-cols-4 gap-6 mb-10">
         <div className="bg-white p-6 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
           <div className="flex items-center space-x-4 mb-4">
             <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
               <User className="w-4 h-4 text-gray-600" strokeWidth={2} />
             </div>
-            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">
-              Total Users
-            </h3>
+            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">Total Users</h3>
           </div>
           <p className="text-3xl font-bold text-gray-900 mb-2">12,847</p>
           <p className="text-[13px] font-medium text-emerald-400">+122 this month</p>
@@ -447,9 +422,7 @@ const DashboardPage = () => {
             <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
               <User className="w-4 h-4 text-gray-600" strokeWidth={2} />
             </div>
-            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">
-              Total Vendors
-            </h3>
+            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">Total Vendors</h3>
           </div>
           <p className="text-3xl font-bold text-gray-900 mb-2">156</p>
           <p className="text-[13px] font-medium text-emerald-400">+12 this month</p>
@@ -460,9 +433,7 @@ const DashboardPage = () => {
             <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
               <ShoppingBag className="w-4 h-4 text-gray-600" strokeWidth={2} />
             </div>
-            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">
-              Total Orders
-            </h3>
+            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">Total Orders</h3>
           </div>
           <p className="text-3xl font-bold text-gray-900 mb-2">2,045</p>
           <p className="text-[13px] font-medium text-emerald-400">+567 this month</p>
@@ -473,16 +444,14 @@ const DashboardPage = () => {
             <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
               <Percent className="w-4 h-4 text-gray-600" strokeWidth={2} />
             </div>
-            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">
-              Total Revenue
-            </h3>
+            <h3 className="text-[13px] font-medium text-gray-400 tracking-wide">Total Revenue</h3>
           </div>
           <p className="text-3xl font-bold text-gray-900 mb-2">$284,591</p>
           <p className="text-[13px] font-medium text-emerald-400">+18.2% this month</p>
         </div>
       </div>
 
-      {/* ── Pending Actions ── */}
+      {/* Pending Actions */}
       <div className="mb-10">
         <h2 className="text-base font-bold text-gray-900 mb-4">Pending Actions</h2>
         <div className="grid grid-cols-2 gap-6">
@@ -490,16 +459,10 @@ const DashboardPage = () => {
             <div>
               <div className="flex items-center mb-1">
                 <AlertTriangle className="w-5 h-5 text-red-500 mr-3" strokeWidth={1.5} />
-                <h3 className="text-[15px] font-medium text-gray-800">
-                  Vendor Approvals Pending
-                </h3>
-                <div className="ml-3 w-5 h-5 rounded-full bg-[#f44336] text-white flex items-center justify-center text-[11px] font-bold">
-                  5
-                </div>
+                <h3 className="text-[15px] font-medium text-gray-800">Vendor Approvals Pending</h3>
+                <div className="ml-3 w-5 h-5 rounded-full bg-[#f44336] text-white flex items-center justify-center text-[11px] font-bold">5</div>
               </div>
-              <p className="text-[13px] text-gray-400 ml-8 mb-6">
-                5 new vendors awaiting approval
-              </p>
+              <p className="text-[13px] text-gray-400 ml-8 mb-6">5 new vendors awaiting approval</p>
             </div>
             <button className="w-full py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-sm hover:bg-gray-50 transition-colors">
               Review Application
@@ -510,12 +473,8 @@ const DashboardPage = () => {
             <div>
               <div className="flex items-center mb-1">
                 <AlertTriangle className="w-5 h-5 text-red-500 mr-3" strokeWidth={1.5} />
-                <h3 className="text-[15px] font-medium text-gray-800">
-                  Update Promotion Banner
-                </h3>
-                <div className="ml-3 w-5 h-5 rounded-full bg-[#f44336] text-white flex items-center justify-center text-[11px] font-bold">
-                  12
-                </div>
+                <h3 className="text-[15px] font-medium text-gray-800">Update Promotion Banner</h3>
+                <div className="ml-3 w-5 h-5 rounded-full bg-[#f44336] text-white flex items-center justify-center text-[11px] font-bold">12</div>
               </div>
               <p className="text-[13px] text-gray-400 ml-8 mb-6">Expires in 2 days</p>
             </div>
@@ -526,7 +485,7 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {/* ── Recent Activities ── */}
+      {/* Recent Activities */}
       <div className="bg-white rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.02)] p-8">
         <div className="mb-8">
           <h2 className="text-base font-bold text-gray-900 mb-1">Recent Activities</h2>
@@ -539,24 +498,12 @@ const DashboardPage = () => {
           <table className="w-full text-left border-collapse">
             <thead className="sticky top-0 bg-white z-10">
               <tr>
-                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[25%]">
-                  Activity
-                </th>
-                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[20%]">
-                  User
-                </th>
-                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">
-                  Role
-                </th>
-                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">
-                  Date
-                </th>
-                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">
-                  Status
-                </th>
-                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[10%]">
-                  Action
-                </th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[25%]">Activity</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[20%]">User</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">Role</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">Date</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[15%]">Status</th>
+                <th className="pb-4 text-[12px] font-medium text-gray-400 uppercase tracking-wider w-[10%]">Action</th>
               </tr>
             </thead>
             <tbody className="text-[14px]">
@@ -637,20 +584,20 @@ const VendorDetailPage = ({ vendor, onBack, onOpenSuspendModal }) => {
       {/* Two Column Layout */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
 
-        {/* Left — Profile Card */}
+        {/* ── Left: Profile Card ── */}
         <div className="xl:col-span-4 bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden h-fit">
+          {/* Banner */}
           <div className="h-48 w-full bg-gray-200">
             <img
               src={bannerImg}
               alt="Vendor Banner"
               className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none'
-              }}
+              onError={(e) => { e.currentTarget.style.display = 'none' }}
             />
           </div>
 
           <div className="p-6">
+            {/* Name + Status */}
             <div className="flex items-center flex-wrap gap-2 mb-2">
               <h3 className="text-xl font-bold text-gray-900">{vendor.name}</h3>
               <span
@@ -671,11 +618,13 @@ const VendorDetailPage = ({ vendor, onBack, onOpenSuspendModal }) => {
 
             <p className="text-sm text-gray-500 mb-4">{vendor.description}</p>
 
+            {/* KYC */}
             <div className="flex items-center text-[#027a48] mb-6">
               <CheckCircle2 className="w-4 h-4 mr-2" />
               <span className="text-sm font-medium">KYC Verified</span>
             </div>
 
+            {/* Info List */}
             <div className="space-y-4">
               <div className="flex items-center text-sm text-gray-700">
                 <Calendar className="w-4 h-4 mr-3 text-gray-400 flex-shrink-0" />
@@ -705,73 +654,92 @@ const VendorDetailPage = ({ vendor, onBack, onOpenSuspendModal }) => {
           </div>
         </div>
 
-        {/* Right — Products Table */}
+        {/* ── Right: Products Table OR Empty State ── */}
         <div className="xl:col-span-8 bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col">
-          <div className="p-6 border-b border-gray-100">
-            <h3 className="text-lg font-bold text-gray-900 mb-1">
-              List of Products by the vendor
-            </h3>
-            <p className="text-sm text-gray-500">
-              View all products currently listed by this vendor, including
-              pricing, stock availability, and sales performance.
-            </p>
-          </div>
+          {vendor.hasProducts ? (
+            /* ── Products Table ── */
+            <>
+              <div className="p-6 border-b border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-1">
+                  List of Products by the vendor
+                </h3>
+                <p className="text-sm text-gray-500">
+                  View all products currently listed by this vendor, including
+                  pricing, stock availability, and sales performance.
+                </p>
+              </div>
 
-          <div className="flex-1 overflow-auto">
-            <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 bg-white z-10">
-                <tr className="border-b border-gray-100">
-                  <th className="py-4 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    Product Name
-                  </th>
-                  <th className="py-4 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    Price
-                  </th>
-                  <th className="py-4 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    Stock
-                  </th>
-                  <th className="py-4 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    Units Sold
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {PRODUCTS_DATA.map((product) => (
-                  <tr
-                    key={product.id}
-                    className="hover:bg-gray-50/50 transition-colors"
-                  >
-                    <td className="px-6 py-5">
-                      <div className="text-xs text-gray-400 mb-1">{product.date}</div>
-                      <div className="flex items-start gap-3">
-                        <input
-                          type="checkbox"
-                          className="mt-0.5 rounded border-gray-300 accent-[#1c2e24]"
-                        />
-                        <div>
-                          <div className="text-sm font-medium text-gray-800">
-                            {product.name}
+              <div className="flex-1 overflow-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead className="sticky top-0 bg-white z-10">
+                    <tr className="border-b border-gray-100">
+                      <th className="py-4 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Product Name
+                      </th>
+                      <th className="py-4 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Price
+                      </th>
+                      <th className="py-4 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Stock
+                      </th>
+                      <th className="py-4 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Units Sold
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {PRODUCTS_DATA.map((product) => (
+                      <tr
+                        key={product.id}
+                        className="hover:bg-gray-50/50 transition-colors"
+                      >
+                        <td className="px-6 py-5">
+                          <div className="text-xs text-gray-400 mb-1">{product.date}</div>
+                          <div className="flex items-start gap-3">
+                            <input
+                              type="checkbox"
+                              className="mt-0.5 rounded border-gray-300 accent-[#1c2e24]"
+                            />
+                            <div>
+                              <div className="text-sm font-medium text-gray-800">
+                                {product.name}
+                              </div>
+                              <div className="text-xs text-gray-400 mt-0.5">
+                                SKU: {product.sku}
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-xs text-gray-400 mt-0.5">
-                            SKU: {product.sku}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5 align-middle">
-                      <span className="text-sm text-gray-700">{product.price}</span>
-                    </td>
-                    <td className="px-6 py-5 align-middle">
-                      <span className="text-sm text-gray-700">{product.stock}</span>
-                    </td>
-                    <td className="px-6 py-5 align-middle">
-                      <span className="text-sm text-gray-700">{product.sold}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                        </td>
+                        <td className="px-6 py-5 align-middle">
+                          <span className="text-sm text-gray-700">{product.price}</span>
+                        </td>
+                        <td className="px-6 py-5 align-middle">
+                          <span className="text-sm text-gray-700">{product.stock}</span>
+                        </td>
+                        <td className="px-6 py-5 align-middle">
+                          <span className="text-sm text-gray-700">{product.sold}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          ) : (
+            /* ── Empty State ── */
+            <div className="flex-1 flex flex-col items-center justify-center p-12 min-h-[500px]">
+              <div className="mb-6">
+                <EmptyBoxIcon />
+              </div>
+              <h3 className="text-[22px] font-bold text-gray-900 mb-3 text-center">
+                This vendor has not listed any product
+              </h3>
+              <p className="text-[15px] text-gray-500 max-w-[480px] text-center leading-relaxed">
+                This vendor hasn&apos;t listed any products on the platform yet.
+                Once they add their first product, it will appear here.
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -855,7 +823,7 @@ const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal, onViewVendor 
           email, or ID to view details, manage status, or perform admin actions.
         </p>
 
-        {/* Filters Row */}
+        {/* Filters */}
         <div className="flex space-x-4 mb-6">
           <div className="flex-1 relative">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -883,51 +851,38 @@ const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal, onViewVendor 
                 <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   {activeTab === 'users' ? 'User' : 'Vendor'}
                 </th>
-                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Activity
-                </th>
-                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Orders
-                </th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Activity</th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Orders</th>
                 <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   {activeTab === 'users' ? 'Total Spent' : 'Total Sales'}
                 </th>
-                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Action
-                </th>
+                <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {tableData.map((row) => (
                 <tr key={row.id} className="hover:bg-gray-50/50 transition-colors">
 
-                  {/* ── Name / Email cell ── */}
+                  {/* Name / Email cell */}
                   <td className="py-4 px-4">
                     {activeTab === 'vendors' ? (
-                      // Vendors — entire cell is a clickable button
                       <button
                         onClick={() => onViewVendor(row)}
                         className="text-left w-full group"
                       >
                         <div className="flex flex-col">
-                          <span className="text-[13px] text-gray-400 mb-1.5">
-                            {row.month}
-                          </span>
+                          <span className="text-[13px] text-gray-400 mb-1.5">{row.month}</span>
                           <div className="flex items-center">
                             <input
                               type="checkbox"
                               onClick={(e) => e.stopPropagation()}
                               className="w-3.5 h-3.5 mr-2.5 rounded border-gray-300 accent-[#1c2e24] flex-shrink-0"
                             />
-                            {/* Email — underlines on group hover */}
                             <span className="text-[14px] font-medium text-[#1c2e24] group-hover:underline">
                               {row.email}
                             </span>
                           </div>
-                          {/* Vendor name */}
                           <span className="text-[13px] font-semibold text-gray-700 mt-0.5 ml-6 group-hover:text-[#1c2e24] transition-colors">
                             {row.name}
                           </span>
@@ -937,11 +892,8 @@ const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal, onViewVendor 
                         </div>
                       </button>
                     ) : (
-                      // Users — plain, non-clickable
                       <div className="flex flex-col">
-                        <span className="text-[13px] text-gray-400 mb-1.5">
-                          {row.month}
-                        </span>
+                        <span className="text-[13px] text-gray-400 mb-1.5">{row.month}</span>
                         <div className="flex items-center">
                           <input
                             type="checkbox"
@@ -958,13 +910,9 @@ const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal, onViewVendor 
 
                   {/* Status */}
                   <td className="py-4 px-4 align-middle">
-                    <span
-                      className={`text-[14px] font-medium ${
-                        row.status === 'Active'
-                          ? 'text-emerald-500'
-                          : 'text-[#f04438]'
-                      }`}
-                    >
+                    <span className={`text-[14px] font-medium ${
+                      row.status === 'Active' ? 'text-emerald-500' : 'text-[#f04438]'
+                    }`}>
                       {row.status}
                     </span>
                   </td>
@@ -984,18 +932,14 @@ const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal, onViewVendor 
                     {row.spent}
                   </td>
 
-                  {/* Action Buttons */}
+                  {/* Actions */}
                   <td className="py-4 px-4 align-middle">
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => {
                           if (activeTab === 'vendors') onViewVendor(row)
                         }}
-                        title={
-                          activeTab === 'vendors'
-                            ? 'View vendor details'
-                            : 'View user'
-                        }
+                        title={activeTab === 'vendors' ? 'View vendor details' : 'View user'}
                         className="p-1.5 border border-gray-200 rounded text-gray-600 hover:bg-gray-50 transition-colors"
                       >
                         <Eye className="w-4 h-4" />
@@ -1024,17 +968,17 @@ const UsersVendorsPage = ({ onOpenInviteModal, onOpenSuspendModal, onViewVendor 
 // ─────────────────────────────────────────────
 const UnderConstructionPage = ({ pageName }) => {
   const icons = {
-    orders: <ShoppingBag className="w-8 h-8 text-gray-400" />,
-    promotions: <Tag className="w-8 h-8 text-gray-400" />,
-    payout: <CreditCard className="w-8 h-8 text-gray-400" />,
-    reports: <FileText className="w-8 h-8 text-gray-400" />,
+    orders:     <ShoppingBag className="w-8 h-8 text-gray-400" />,
+    promotions: <Tag         className="w-8 h-8 text-gray-400" />,
+    payout:     <CreditCard  className="w-8 h-8 text-gray-400" />,
+    reports:    <FileText    className="w-8 h-8 text-gray-400" />,
   }
 
   return (
     <div className="flex-1 flex items-center justify-center bg-[#f8f9fa]">
       <div className="text-center">
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-          {icons[pageName] || <FileText className="w-8 h-8 text-gray-400" />}
+          {icons[pageName] ?? <FileText className="w-8 h-8 text-gray-400" />}
         </div>
         <h2 className="text-xl font-semibold text-gray-700 mb-2">
           {pageName.charAt(0).toUpperCase() + pageName.slice(1)} Page
@@ -1069,7 +1013,7 @@ export default function App() {
   return (
     <div className="flex h-screen bg-[#f8f9fa] font-sans text-gray-800 antialiased">
 
-      {/* ── Modals ── */}
+      {/* Modals */}
       <InviteUserModal
         isOpen={isInviteModalOpen}
         onClose={() => setIsInviteModalOpen(false)}
@@ -1082,7 +1026,6 @@ export default function App() {
       {/* ── Sidebar ── */}
       <aside className="w-64 bg-white flex flex-col justify-between flex-shrink-0 border-r border-gray-100 shadow-[2px_0_8px_rgba(0,0,0,0.02)] z-10 relative">
         <div className="pt-8">
-          {/* Logo */}
           <div className="h-12 flex items-center px-6 mb-4">
             <span className="text-3xl font-serif italic font-medium text-gray-800 tracking-tight">
               Iyóge
@@ -1099,9 +1042,7 @@ export default function App() {
             <SidebarItem
               icon={Users}
               label="Users & Vendors"
-              active={
-                currentPage === 'users' || currentPage === 'vendorDetail'
-              }
+              active={currentPage === 'users' || currentPage === 'vendorDetail'}
               onClick={() => setCurrentPage('users')}
             />
             <SidebarItem
@@ -1147,7 +1088,6 @@ export default function App() {
 
         {/* Top Header */}
         <header className="h-16 bg-white flex items-center justify-between px-8 z-0 relative border-b border-gray-100 flex-shrink-0">
-          {/* Search */}
           <div className="flex-1 flex items-center mr-6">
             <div className="relative w-full max-w-[500px]">
               <Search
@@ -1162,7 +1102,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Right: Bell + Avatar */}
           <div className="flex items-center space-x-3 flex-shrink-0">
             <button className="w-10 h-10 flex items-center justify-center border border-gray-100 rounded-sm text-gray-400 hover:bg-gray-50 hover:text-gray-600 transition-colors">
               <Bell className="w-5 h-5" strokeWidth={1.5} />
